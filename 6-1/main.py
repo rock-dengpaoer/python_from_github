@@ -121,7 +121,8 @@ def main():
     # test_1()
     # insert_table()
     # select_all_table()
-    select_table_limit()
+    # select_table_limit()
+
 
 if __name__ == '__main__':
     main()

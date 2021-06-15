@@ -120,7 +120,7 @@ def main():
     # update_tables()
     # test_1()
     # insert_table()
-    # select_all_table()
+     select_all_table()
     # select_table_limit()
 
 

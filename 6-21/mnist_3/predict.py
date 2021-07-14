@@ -62,7 +62,7 @@ def draw(event, x, y, flags, param):
         drawing = True
     elif event == cv.EVENT_MOUSEMOVE:  # 响应鼠标移动
         if drawing:
-            img[y:y + 20, x:x + 20] = (0, 0, 0)
+            img[y:y + 10, x:x + 10] = (0, 0, 0)
     elif event == cv.EVENT_LBUTTONUP:  # 响应鼠标松开
         drawing = False
 
@@ -73,26 +73,38 @@ if __name__ == "__main__":
     # app.predict('../test_images/1.png')
     # app.predict('../test_images/4.png')
     # 创建一个白色的图像，一个窗口
-    img = np.zeros((300, 300, 3), np.uint8)+255
+    img = np.zeros((300, 300, 3), np.uint8) + 255
 
     cv.namedWindow('image')
 
+    # 加入训练集
+    append = 'append'
+    # 所写数字的正确数值
+    right = 'right'
+    # 清空画布
     clear = 'clear'
+    # 识别数字
     distinguish = 'distinguish'
 
+    # 创建轨迹条
     cv.createTrackbar(distinguish, 'image', 0, 1, nothing)  # 识别数字
     cv.createTrackbar(clear, 'image', 0, 1, nothing)  # 清空画布
+    cv.createTrackbar(right, 'image', 0, 9, nothing)  # 所写之字的正确数字
+    cv.createTrackbar(append, 'image', 0, 1, nothing)  # 加入训练集中
 
     cv.setMouseCallback('image', draw)
     img[:] = (255, 255, 255)  # 将画板设为白色
 
     while 1:
         cv.imshow('image', img)
+
+        # 按下返回键，退出循环，结束程序
         if cv.waitKey(1) & 0xFF == 27:
             break
 
         c = cv.getTrackbarPos(clear, 'image')
         d = cv.getTrackbarPos(distinguish, 'image')
+        a = cv.getTrackbarPos(append, 'image')
 
         # 清空画布
         if c == 1:
@@ -112,5 +124,8 @@ if __name__ == "__main__":
             cv_img = cv.resize(cv_img, (28, 28))
             cv.imwrite("test.png", cv_img)
             app.predict('test.png')
+
+        if a == 1:  # 加入训练集中
+            pass
 
     cv.destroyAllWindows()
